@@ -1,4 +1,4 @@
-## Web UI for Dongnebook
+## Web UI for dongnelibrary package
 
 ### 설치
     $ bower install
