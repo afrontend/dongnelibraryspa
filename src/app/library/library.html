@@ -1,0 +1,54 @@
+<div class="container">
+
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <ul class="menu">
+        <li><input ng-model="library.text" type="search" placeholder="이 책을 빌릴 수 있을까?"></li>
+        <li><button ng-click="library.search()" type="button" class="button">Search</button></li>
+        <li><button ng-click="library.clear()" type="button" class="alert button">X</button></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="button-group">
+      <span ng-repeat="btn in library.libraryButtons">
+        <span ng-click="library.selectLibrary($index)" ng-class="{info: btn.searchResult, secondary: !btn.searchResult}" class="secondary button">{{btn.libraryName}}</span>
+      </span>
+      <span><span ng-click="library.showList()" class="alert button">검색된 책</span></span>
+      <span><span ng-click="library.hideList()" class="alert button">검색된 도서관</span></span>
+    </div>
+      <!--<div class="medium-6 large-4 columns"><span ng-click="library.showList()" class="alert button">검색된 책</span></div>-->
+  </div>
+
+  <div class="row">
+    <div class="large-12 medium-12 small-12 columns" ng-repeat="lib in library.libraryList track by $index">
+      <table ng-show="lib.show">
+        <thead>
+          <tr>
+            <th width="100%" ng-click="library.toggleList($index)">
+              <span class="alert badge" >❯ </span>
+              &nbsp;{{lib.libraryName}}
+              <span ng-hide="lib.error" class="secondary badge" >{{lib.books.length}}</span>
+              <span ng-hide="lib.error" class="info badge" >{{lib.validLength}}</span>
+              <span ng-show="lib.error" class="alert badge" >0</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody ng-hide="lib.hideListFlag">
+        <tr ng-repeat="book in lib.books track by $index">
+          <td>
+            <span class="libraryNameBold">{{lib.libraryName.slice(0, 2)}}</span>
+            <!--<span ng-class="{hidden: book.exist === false}" class="info badge">✓ </span>-->
+            <span ng-show="book.exist" class="info badge">✓ </span>
+            <span ng-hide="book.exist" class="secondary badge">&nbsp;&nbsp;</span>
+            &nbsp;{{book.title}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
