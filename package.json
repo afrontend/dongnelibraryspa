@@ -6,6 +6,7 @@
   "main": "gulpfile.js",
   "dependencies": {
     "body-parser": "~1.15.1",
+    "bower": "^1.7.9",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "dongnelibrary": "latest",
@@ -16,8 +17,9 @@
     "serve-favicon": "~2.3.0"
   },
   "scripts": {
-    "start": "gulp build; node ./bin/dongnelibraryspa",
-    "test": "gulp test"
+    "start": "node ./bin/dongnelibraryspa",
+    "test": "gulp test",
+    "postinstall": "bower install && gulp build"
   },
   "devDependencies": {
     "estraverse": "~4.1.0",
