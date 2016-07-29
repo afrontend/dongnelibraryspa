@@ -8,7 +8,6 @@ $ npm install
 
 ### 사용 예
 ```sh
-$ gulp build
 $ npm start
 ```
 
