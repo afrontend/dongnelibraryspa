@@ -1,8 +1,7 @@
-## Web UI for dongnelibrary package
+## Web UI for [dongnelibrary][dl-url] package
 
 ### 설치
 ```sh
-$ bower install
 $ npm install
 ```
 
@@ -11,3 +10,4 @@ $ npm install
 $ npm start
 ```
 
+[dl-url]: https://github.com/afrontend/dongnelibrary
