@@ -2,6 +2,8 @@
 
 ### 설치
 ```sh
+$ git clone https://github.com/afrontend/dongnelibraryspa
+$ cd dongnelibraryspa
 $ npm install
 ```
 
