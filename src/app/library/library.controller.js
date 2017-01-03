@@ -122,6 +122,7 @@
       _.each(vm.libraryList, function(library) {
           library.show = true;
           library.hideListFlag = false;
+          library.hideTitleFlag = true;
       });
     }
 
@@ -130,6 +131,7 @@
       _.each(vm.libraryList, function(library) {
           library.show = true;
           library.hideListFlag = true;
+          library.hideTitleFlag = false;
       });
     }
 
