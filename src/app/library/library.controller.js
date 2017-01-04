@@ -56,6 +56,7 @@
     }
 
     function loadLibraryList(title) {
+      var currentTicket = ticket.next();
       angular.forEach(vm.libraryNames, function (libraryName) {
           $timeout(function(){
               libraryService.getLibrary({
@@ -63,16 +64,20 @@
                   libraryName: libraryName
                 }, function (error, data) {
                   if(error.code === 0) {
-                    appendMetaData(data);
-                    vm.libraryList.push(data);
-                    updateLibraryButton();
+                    if(currentTicket === ticket.get()) {
+                      appendMetaData(data);
+                      vm.libraryList.push(data);
+                      updateLibraryButton();
+                    } else {
+                      //showToastr(libraryName+" was ignored.");
+                    }
                   } else {
                     data.error == true;
                     vm.libraryList.push({});
                     showToastr(libraryName+", "+error.msg);
                   }
               })
-            },500);
+          });
       })
     }
 
@@ -96,6 +101,7 @@
       vm.libraryList = [];
       updateLibraryButton();
       vm.selected = false;
+      ticket.next();
     }
 
     function selectLibrary(index) {
@@ -158,6 +164,19 @@
           }
       });
     }
+
+    var ticket = (function () {
+        var ticketNumber = 0;
+        return {
+          get: function () {
+            return ticketNumber;
+          },
+          next: function () {
+            ticketNumber = ticketNumber + 1;
+            return ticketNumber;
+          }
+        };
+    })();
 
   }
 })();
