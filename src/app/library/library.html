@@ -6,7 +6,7 @@
         <li><input ng-model="library.text" type="search" placeholder="이 책을 빌릴 수 있을까?"></li>
         <li><button ng-click="library.search()" type="button" class="button">Search</button></li>
         <li><button ng-click="library.clear()" type="button" class="alert button">X</button></li>
-        <li><input ng-model="searchText" type="search" placeholder="결과에서 검색"></li>
+        <li><input ng-model="library.searchText" type="search" placeholder="결과에서 검색"></li>
       </ul>
     </div>
   </div>
@@ -37,7 +37,7 @@
           </tr>
         </thead>
         <tbody ng-hide="lib.hideListFlag">
-        <tr ng-repeat="book in lib.books | filter:searchText">
+        <tr ng-repeat="book in lib.books | filter:library.searchText">
           <td>
             <span class="libraryNameBold">{{lib.libraryName.slice(0, 2)}}</span>
             <!--<span ng-class="{hidden: book.exist === false}" class="info badge">✓ </span>-->

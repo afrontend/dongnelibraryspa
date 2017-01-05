@@ -98,6 +98,7 @@
 
     function clear() {
       vm.text = '';
+      vm.searchText = '';
       vm.libraryList = [];
       updateLibraryButton();
       vm.selected = false;
