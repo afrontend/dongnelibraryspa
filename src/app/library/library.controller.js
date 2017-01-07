@@ -132,15 +132,17 @@
     }
 
     function search() {
-      vm.libraryList = [];
-      var count = SL.count();
-      if(count > 0) {
-        showToastr(count + " 개의 도서관을 검색합니다.");
-      } else {
-        showToastr('모든 도서관을 검색합니다..');
-        selectAllLibrary();
+      if(vm.text.length !== 0) {
+        vm.libraryList = [];
+        var count = SL.count();
+        if(count > 0) {
+          showToastr(count + " 개의 도서관을 검색합니다.");
+        } else {
+          showToastr('모든 도서관을 검색합니다.');
+          selectAllLibrary();
+        }
+        loadLibraryList(vm.text, SL.get());
       }
-      loadLibraryList(vm.text, SL.get());
     }
 
     function clear() {
@@ -193,8 +195,8 @@
       return (vm.libraryList.length > 0)
     }
 
-    function selectLibrary(index) {
-      var libraryName = vm.libraryButtons[index].libraryName;
+    function selectLibrary(libraryName) {
+      //var libraryName = vm.libraryButtons[index].libraryName;
       if (isValidResult()) {
         var found = _.find(vm.libraryList, function(lib){
             return lib.libraryName === libraryName;
