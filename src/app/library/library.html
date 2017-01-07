@@ -1,23 +1,30 @@
 <div class="container">
 
   <div class="top-bar">
-    <div class="top-bar-left">
+    <div class="top-bar-center">
       <ul class="menu">
         <li><input ng-model="library.text" type="search" placeholder="이 책을 빌릴 수 있을까?"></li>
-        <li><button ng-click="library.search()" type="button" class="button">Search</button></li>
-        <li><button ng-click="library.clear()" type="button" class="alert button">X</button></li>
-        <li><input ng-model="library.searchText" type="search" placeholder="결과에서 검색"></li>
+        <li><button ng-click="library.search()" type="button" class="button">검색시작</button></li>
+        <li><button ng-show="library.text.length > 0" ng-click="library.clear()" type="button" class="alert button">다시시작</button></li>
+      </ul>
+    </div>
+    <div class="top-bar-right">
+      <ul class="menu">
+        <!--<li><input ng-model="library.searchText" type="search" placeholder="결과에서 검색"></li>-->
+        <!--<li><input ng-model="library.searchName" type="search" placeholder="도서관찾기"></li>-->
       </ul>
     </div>
   </div>
 
   <div class="row">
     <div class="button-group">
-      <span ng-repeat="btn in library.libraryButtons">
+      <span ng-show="library.libraryList.length === 0" ng-click="library.selectAllLibrary()" class="alert button">모든 도서관 선택</span>
+      <span ng-repeat="btn in library.libraryButtons | filter:library.searchName">
         <span ng-click="library.selectLibrary($index)" ng-class="{info: btn.searchResult, secondary: !btn.searchResult}" class="secondary button">{{btn.libraryName}}</span>
       </span>
-      <span><span ng-click="library.showList()" class="alert button">책 이름만</span></span>
-      <span><span ng-click="library.hideList()" class="alert button">도서관 이름만</span></span>
+      <span ng-show="library.libraryList.length > 0" ng-click="library.showList()" class="alert button">모든 책</span>
+      <span ng-show="library.libraryList.length > 0" ng-click="library.hideList()" class="alert button">모든 도서관</span>
+      <span ng-show="library.libraryList.length === 0" ng-click="library.unselectAllLibrary()" class="alert button">모든 도서관 해제</span>
     </div>
       <!--<div class="medium-6 large-4 columns"><span ng-click="library.showList()" class="alert button">검색된 책</span></div>-->
   </div>

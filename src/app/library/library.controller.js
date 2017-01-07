@@ -6,19 +6,21 @@
     .controller('LibraryController', LibraryController);
 
   /** @ngInject */
-  function LibraryController($timeout, webDevTec, toastr, libraryService, _) {
+  function LibraryController($log, $timeout, webDevTec, toastr, libraryService, _) {
     var vm = this;
 
-    vm.libraryList = [];
-    vm.libraryNames = [];
-    vm.libraryButtons = [];
-    vm.showToastr = showToastr;
-    vm.search = search;
-    vm.clear = clear;
-    vm.selectLibrary = selectLibrary;
-    vm.showList = showList;
-    vm.hideList = hideList;
-    vm.text = '';
+    vm.libraryList        = [];
+    vm.libraryNames       = [];
+    vm.libraryButtons     = [];
+    vm.showToastr         = showToastr;
+    vm.search             = search;
+    vm.clear              = clear;
+    vm.selectAllLibrary   = selectAllLibrary;
+    vm.unselectAllLibrary = unselectAllLibrary;
+    vm.selectLibrary      = selectLibrary;
+    vm.showList           = showList;
+    vm.hideList           = hideList;
+    vm.text               = '';
     vm.toggleList = function (index) {
       var lib = vm.libraryList[index];
       if(lib.books.length !== 0) {
@@ -29,7 +31,53 @@
         }
       }
     }
-    vm.selected = false;
+
+    vm.searchName = '';
+
+    /* Selected Library */
+    var SL = (function (updateUI) {
+        var selectedLibrary = [];
+        return {
+          clear: function () {
+            selectedLibrary = [];
+            updateUI();
+          },
+          add: function (name) {
+            if(angular.isArray(name)) {
+              selectedLibrary = selectedLibrary.concat(name);
+            } else {
+              selectedLibrary.push(name);
+            }
+            $log.debug('add: ' + selectedLibrary);
+            updateUI(selectedLibrary);
+          },
+          remove: function (name) {
+            selectedLibrary = _.filter(selectedLibrary, function (slname) {
+                return name !== slname;
+            });
+            $log.debug('remove: ' + selectedLibrary);
+            updateUI(selectedLibrary);
+          },
+          get: function () {
+            return selectedLibrary;
+          },
+          count: function () {
+            return selectedLibrary.length;
+          },
+          exist: function (targetName) {
+            var rt = false;
+            var found = _.find(selectedLibrary, function (name) {
+                return name === targetName;
+            });
+            if(angular.isUndefined(found)) {
+              rt = false;
+            } else {
+              rt = true;
+            }
+            return rt;
+          }
+        };
+    })(refreshButtons);
 
     activate();
 
@@ -44,20 +92,16 @@
 
     function appendMetaData(data) {
       data.hideListFlag = true;
-      if(vm.selected) {
-        data.show = false;
-      } else {
-        data.show = true;
-      }
+      data.show = true;
       data.error = false;
       data.validLength = _.filter(data.books, function (book) {
           return (book.exist === true)
       }).length;
     }
 
-    function loadLibraryList(title) {
+    function loadLibraryList(title, libraryNames) {
       var currentTicket = ticket.next();
-      angular.forEach(vm.libraryNames, function (libraryName) {
+      angular.forEach(libraryNames, function (libraryName) {
           $timeout(function(){
               libraryService.getLibrary({
                   title: title,
@@ -67,7 +111,6 @@
                     if(currentTicket === ticket.get()) {
                       appendMetaData(data);
                       vm.libraryList.push(data);
-                      updateLibraryButton();
                     } else {
                       //showToastr(libraryName+" was ignored.");
                     }
@@ -89,43 +132,88 @@
     }
 
     function search() {
-      showToastr("search ("+vm.text+")");
       vm.libraryList = [];
-      updateLibraryButton();
-      vm.selected = false;
-      loadLibraryList(vm.text);
+      var count = SL.count();
+      if(count > 0) {
+        showToastr(count + " 개의 도서관을 검색합니다.");
+      } else {
+        showToastr('모든 도서관을 검색합니다..');
+        selectAllLibrary();
+      }
+      loadLibraryList(vm.text, SL.get());
     }
 
     function clear() {
       vm.text = '';
       vm.searchText = '';
       vm.libraryList = [];
-      updateLibraryButton();
-      vm.selected = false;
       ticket.next();
+    }
+
+    function selectAllLibrary() {
+      SL.clear();
+      SL.add(vm.libraryNames);
+    }
+
+    function unselectAllLibrary() {
+      SL.clear();
+    }
+
+    function refreshButtons(slnames) {
+      if(slnames) {
+        _.each(vm.libraryButtons, function(btn){
+            var found = _.find(slnames, function(libraryName) {
+                return btn.libraryName === libraryName;
+            });
+            if(found) {
+              btn.searchResult = true;
+            } else {
+              btn.searchResult = false;
+            }
+        });
+      } else {
+        _.each(vm.libraryButtons, function(btn){
+            btn.searchResult = false;
+        });
+      }
+    }
+
+    function hideAllResult() {
+      _.each(vm.libraryList, function(library) {
+          library.show = false;
+      });
+    }
+
+    function showLibraryResult(library) {
+      library.show = true;
+      library.hideListFlag = false;
+    }
+
+    function isValidResult() {
+      return (vm.libraryList.length > 0)
     }
 
     function selectLibrary(index) {
       var libraryName = vm.libraryButtons[index].libraryName;
-
-      var found = _.find(vm.libraryList, function(lib){
-        return lib.libraryName === libraryName;
-      });
-
-      if(found) {
-        _.each(vm.libraryList, function(library) {
-            library.show = false;
+      if (isValidResult()) {
+        var found = _.find(vm.libraryList, function(lib){
+            return lib.libraryName === libraryName;
         });
-        found.show = true;
-        found.hideListFlag = false;
-        vm.selected = true;
+
+        if(found) {
+          hideAllResult();
+          showLibraryResult(found);
+        }
       } else {
-        showToastr(libraryName +  ", 검색 결과가 없습니다.");
+        if(SL.exist(libraryName) === true) {
+          SL.remove(libraryName);
+        } else {
+          SL.add(libraryName);
+        }
       }
     }
 
     function showList() {
-      vm.selected = false;
       _.each(vm.libraryList, function(library) {
           library.show = true;
           library.hideListFlag = false;
@@ -134,7 +222,6 @@
     }
 
     function hideList() {
-      vm.selected = false;
       _.each(vm.libraryList, function(library) {
           library.show = true;
           library.hideListFlag = true;
@@ -149,20 +236,6 @@
             searchResult: false
           };
           return o;
-      });
-    }
-
-    function updateLibraryButton() {
-      _.each(vm.libraryButtons, function(btn) {
-          var found = _.find(vm.libraryList, function(lib){
-              return lib.libraryName === btn.libraryName;
-          });
-
-          if(found) {
-            btn.searchResult = true;
-          } else {
-            btn.searchResult = false;
-          }
       });
     }
 
