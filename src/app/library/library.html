@@ -25,8 +25,8 @@
       <div ng-repeat="btn in library.libraryButtons | filter:library.searchName | orderBy:'libraryName'" ng-click="library.selectLibrary(btn.libraryName)" ng-class="{info: btn.searchResult, secondary: !btn.searchResult}" class="secondary button small-6 large-4 columns" ng-bind="btn.libraryName">&nbsp;</div>
       <div ng-show="library.libraryList.length > 0" ng-click="library.showList()" class="alert button small-6 large-4 columns">모든 책</div>
       <div ng-show="library.libraryList.length > 0" ng-click="library.hideList()" class="alert button small-6 large-4 columns">모든 도서관</div>
-      <div ng-show="library.libraryList.length === 0" ng-click="library.selectAllLibrary()" class="alert button small-6 large-4 columns">All +</div>
-      <div ng-show="library.libraryList.length === 0" ng-click="library.unselectAllLibrary()" class="alert button small-6 large-4 columns">All -</div>
+      <div ng-show="library.libraryList.length === 0" ng-click="library.selectAllLibrary()" class="alert button small-6 large-4 columns">도서관 모두 선택</div>
+      <div ng-show="library.libraryList.length === 0" ng-click="library.unselectAllLibrary()" class="alert button small-6 large-4 columns">도서관 모두 해제</div>
     <!--</div>-->
       <!--<div class="medium-6 large-4 columns"><span ng-click="library.showList()" class="alert button">검색된 책</span></div>-->
   </div>
