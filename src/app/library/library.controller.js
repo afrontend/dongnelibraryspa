@@ -90,8 +90,11 @@
       toastr.info(str);
     }
 
-    function appendMetaData(data) {
+    function appendMeta(data, libraryCount) {
       data.hideListFlag = true;
+      if(libraryCount && libraryCount === 1) {
+        data.hideListFlag = false;
+      }
       data.show = true;
       data.error = false;
       data.validLength = _.filter(data.books, function (book) {
@@ -100,7 +103,11 @@
     }
 
     function loadLibraryList(title, libraryNames) {
-      var currentTicket = ticket.next();
+      if(!angular.isArray(libraryNames)) {
+        showToastr("도서관 선택을 다시해 주세요.");
+        return;
+      }
+      var currentTicket = ticket.next(libraryNames.length);
       angular.forEach(libraryNames, function (libraryName) {
           $timeout(function(){
               libraryService.getLibrary({
@@ -109,7 +116,7 @@
                 }, function (error, data) {
                   if(error.code === 0) {
                     if(currentTicket === ticket.get()) {
-                      appendMetaData(data);
+                      appendMeta(data, ticket.getLibraryCount());
                       vm.libraryList.push(data);
                     } else {
                       //showToastr(libraryName+" was ignored.");
@@ -243,11 +250,20 @@
 
     var ticket = (function () {
         var ticketNumber = 0;
+        var libraryCount = 0;
         return {
+          getLibraryCount: function () {
+            return libraryCount;
+          },
           get: function () {
             return ticketNumber;
           },
-          next: function () {
+          next: function (count) {
+            if(count) {
+              libraryCount = count;
+            } else {
+              libraryCount = 0;
+            }
             ticketNumber = ticketNumber + 1;
             return ticketNumber;
           }
