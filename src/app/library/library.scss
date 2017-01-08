@@ -13,3 +13,11 @@ table {
 .button {
     margin-bottom: 0;
 }
+
+.bold {
+    font-weight: bold;
+}
+
+.bold .button {
+    color: #000 !important;
+}
