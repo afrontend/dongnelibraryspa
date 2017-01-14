@@ -6,7 +6,7 @@
     .controller('LibraryController', LibraryController);
 
   /** @ngInject */
-  function LibraryController($log, $timeout, webDevTec, toastr, libraryService, _) {
+  function LibraryController($scope, $log, $timeout, webDevTec, toastr, libraryService, _) {
     var vm = this;
 
     vm.libraryList        = [];
@@ -31,6 +31,18 @@
         }
       }
     }
+
+    $scope.$watch(function() {
+        return vm.text;
+      }, function(current, original) {
+        if (current.length > 0) {
+          angular.element('#libraryLabels').slideDown();
+        } else {
+          angular.element('#libraryLabels').slideUp();
+        }
+        $log.info('vm.text was %s', original);
+        $log.info('vm.text is now %s', current);
+    });
 
     vm.searchName = '';
 

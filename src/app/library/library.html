@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="row" ng-class="{bold: library.libraryList.length > 0}">
+  <div id="libraryLabels" class="row" ng-class="{bold: library.libraryList.length > 0}">
     <!--<div class="button-group">-->
       <div ng-repeat="btn in library.libraryButtons | filter:library.searchName | orderBy:'libraryName'" ng-click="library.selectLibrary(btn.libraryName)" ng-class="{info: btn.searchResult, secondary: !btn.searchResult}" class="secondary button small-6 large-4 columns" ng-bind="btn.libraryName">&nbsp;</div>
       <div ng-show="library.libraryList.length > 0" ng-click="library.showList()" class="alert button small-6 large-4 columns">모든 책</div>
