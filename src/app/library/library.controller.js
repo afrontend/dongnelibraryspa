@@ -6,7 +6,7 @@
     .controller('LibraryController', LibraryController);
 
   /** @ngInject */
-  function LibraryController($scope, $log, $timeout, webDevTec, toastr, libraryService, _) {
+  function LibraryController($location, $scope, $log, $timeout, webDevTec, toastr, libraryService, _) {
     var vm = this;
 
     vm.libraryList        = [];
@@ -31,12 +31,19 @@
         }
       }
     }
+    vm.oneTimeHide = true;
 
     $scope.$watch(function() {
         return vm.text;
       }, function(current, original) {
         if (current.length > 0) {
-          angular.element('#libraryLabels').slideDown();
+          vm.oneTimeHide = false;
+          $timeout(function () {
+            $scope.$apply();
+          });
+          $timeout(function () {
+              angular.element('#libraryLabels').slideDown();
+            }, 300);
         } else {
           angular.element('#libraryLabels').slideUp();
         }
@@ -93,9 +100,19 @@
 
     activate();
 
+    function parseUrlParam() {
+      var param = $location.search();
+      if(param && param.keyword) {
+        vm.text = param.keyword;
+        search();
+      }
+    }
+
     function activate() {
       //loadLibraryList('javascript');
-      loadLibraryNames();
+      loadLibraryNames(function () {
+          parseUrlParam();
+      });
     }
 
     function showToastr(str) {
@@ -143,10 +160,13 @@
       })
     }
 
-    function loadLibraryNames() {
+    function loadLibraryNames(callback) {
       libraryService.getLibraryNames(function (data) {
           vm.libraryNames = data;
           initLibraryButton();
+          if(callback) {
+            callback();
+          }
       })
     }
 
