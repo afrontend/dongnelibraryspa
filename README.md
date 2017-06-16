@@ -4,9 +4,12 @@
 ```sh
 docker pull frontendwordpress/dongnelibraryspa
 docker run -d -p 3000:3000 --name "dongne" frontendwordpress/dongnelibraryspa
+```
+
+### 중지 및 시작
+```sh
 docker stop dongne
 docker start dongne
-docker rm dongne
 ```
 
 ## 2. Node 사용 예
