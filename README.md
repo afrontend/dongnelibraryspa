@@ -3,7 +3,10 @@
 ## 1. Docker 사용 예
 ```sh
 docker pull frontendwordpress/dongnelibraryspa
-docker run -d -p 3000:3000 frontendwordpress/dongnelibraryspa
+docker run -d -p 3000:3000 --name "dongne" frontendwordpress/dongnelibraryspa
+docker stop dongne
+docker start dongne
+docker rm dongne
 ```
 
 ## 2. Node 사용 예
