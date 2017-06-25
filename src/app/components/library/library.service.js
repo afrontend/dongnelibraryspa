@@ -22,15 +22,11 @@
       }).then(function successCallback(response) {
           //$log.log("response.data: " + angular.fromJson(response.data));
           if(callback) {
-            callback({
-                code: 0,
-                msg: ''
-              }, response.data)
+            callback(null, response.data)
           }
         }, function errorCallback(response) {
           if(response.status === -1) {
             callback({
-                code: 1,
                 msg: '검색에 실패했습니다.'
               }, response.data)
           }

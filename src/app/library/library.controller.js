@@ -143,17 +143,17 @@
                   title: title,
                   libraryName: libraryName
                 }, function (error, data) {
-                  if(error.code === 0) {
+                  if(error) {
+                    data.error = true;
+                    vm.libraryList.push({});
+                    showToastr(libraryName+", "+error.msg);
+                  } else {
                     if(currentTicket === ticket.get()) {
                       appendMeta(data, ticket.getLibraryCount());
                       vm.libraryList.push(data);
                     } else {
                       //showToastr(libraryName+" was ignored.");
                     }
-                  } else {
-                    data.error == true;
-                    vm.libraryList.push({});
-                    showToastr(libraryName+", "+error.msg);
                   }
               })
           });

@@ -23,15 +23,21 @@ router.get('/search', function (req, res, next) {
       libraryName: libraryName,
       books: []
     };
-    if (!err) {
+    if (err) {
+      res.json({
+        err: '서버 접속에 실패했습니다.',
+        libraryName: libraryName,
+        books: []
+      });
+    } else {
       book.booklist.forEach(function (book) {
         libraryData.books.push({
           title: book.title,
           exist: book.exist
         })
       });
+      res.json(libraryData);
     }
-    res.json(libraryData);
   });
 });
 
