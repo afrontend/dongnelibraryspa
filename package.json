@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "dongnelibraryspa",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Web UI for dongnelibrary",
   "main": "gulpfile.js",
   "dependencies": {
@@ -9,7 +9,7 @@
     "bower": "^1.8.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
-    "dongnelibrary": "~0.1.4",
+    "dongnelibrary": "~0.1.6",
     "ejs": "~2.4.1",
     "express": "~4.13.4",
     "gulp": "^3.9.1",
