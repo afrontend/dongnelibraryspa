@@ -1,25 +1,25 @@
-도서관 책을 빌릴 수 있는지 확인하는 웹서비스
+도서관 책을 빌릴 수 있는지 확인하는 웹 서비스
 
 ## 1. Docker
 ```sh
-$ docker pull frontendwordpress/dongnelibraryspa
-$ docker run -d -p 3000:3000 --name "dongne" frontendwordpress/dongnelibraryspa
+docker pull frontendwordpress/dongnelibraryspa
+docker run -d -p 3000:3000 --name "dongne" frontendwordpress/dongnelibraryspa
 ```
 
 `http://localhost:3000/` 주소에 접속하여 도서 검색
 
 ### 중지 및 시작
 ```sh
-$ docker stop dongne
-$ docker start dongne
+docker stop dongne
+docker start dongne
 ```
 
 ## 2. Npm
 ```sh
-$ git clone https://github.com/afrontend/dongnelibraryspa
-$ cd dongnelibraryspa
-$ npm install
-$ npm start
+git clone https://github.com/afrontend/dongnelibraryspa
+cd dongnelibraryspa
+npm install
+npm start
 ```
 `http://localhost:3000/` 주소에 접속하여 도서 검색
 
