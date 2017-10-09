@@ -18,7 +18,7 @@ router.get('/search', function (req, res, next) {
   dl.search({
     title: title,
     libraryName: libraryName
-  }, function (err, book) {
+  }, function (err, data) {
     var libraryData = {
       libraryName: libraryName,
       books: []
@@ -30,7 +30,7 @@ router.get('/search', function (req, res, next) {
         books: []
       });
     } else {
-      book.booklist.forEach(function (book) {
+      data.booklist.forEach(function (book) {
         libraryData.books.push({
           title: book.title,
           exist: book.exist
@@ -41,7 +41,8 @@ router.get('/search', function (req, res, next) {
   });
 });
 
-router.get('/libraryNames', function(req, res, next) {
+/* GET libraryName listing. */
+router.get('/libraryNames', function (req, res, next) {
   res.json(dl.getLibraryNames());
 });
 
