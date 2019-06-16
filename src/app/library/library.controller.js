@@ -129,6 +129,7 @@
       data.validLength = _.filter(data.books, function (book) {
           return (book.exist === true)
       }).length;
+      data.libraryLabel = shortenLibraryName(data.libraryName);
     }
 
     function loadLibraryList(title, libraryNames) {
@@ -270,13 +271,21 @@
       });
     }
 
+    function shortenLibraryName(name) {
+      if(name && name.replace) {
+        return name.replace(/도서관/, '');
+      }
+      return name;
+    }
+
     function initLibraryButton() {
       vm.libraryButtons = _.map(vm.libraryNames, function(name){
-          var o = {
-            libraryName: name,
-            searchResult: false
-          };
-          return o;
+        var o = {
+          libraryName: name,
+          libraryLabel: shortenLibraryName(name),
+          searchResult: false
+        };
+        return o;
       });
     }
 
@@ -303,4 +312,5 @@
     })();
 
   }
+
 })();

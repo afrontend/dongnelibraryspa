@@ -8,7 +8,7 @@
           <input ng-model="library.text" type="search" placeholder="이 책을 빌릴 수 있을까?">
         </form>
         </li>
-        <li><button ng-click="library.search()" ng-class="{success: library.text.length === 0}" type="button" class="button">검색시작</button></li>
+        <li><button ng-click="library.search()" ng-class="{success: library.text.length === 0}" type="button" class="button">검색</button></li>
         <li><button ng-show="library.text.length > 0" ng-click="library.clear()" type="button" class="alert button">다시시작</button></li>
       </ul>
     </div>
@@ -22,7 +22,7 @@
 
   <div id="libraryLabels" class="row" ng-hide="library.oneTimeHide" ng-class="{bold: library.libraryList.length > 0}">
     <!--<div class="button-group">-->
-      <div ng-repeat="btn in library.libraryButtons | filter:library.searchName | orderBy:'libraryName'" ng-click="library.selectLibrary(btn.libraryName)" ng-class="{info: btn.searchResult, secondary: !btn.searchResult}" class="secondary button small-6 medium-4 large-3 columns" ng-bind="btn.libraryName">&nbsp;</div>
+      <div ng-repeat="btn in library.libraryButtons | filter:library.searchName | orderBy:'libraryName'" ng-click="library.selectLibrary(btn.libraryName)" ng-class="{info: btn.searchResult, secondary: !btn.searchResult}" class="secondary button small-6 medium-4 large-3 columns" ng-bind="btn.libraryLabel">&nbsp;</div>
       <div ng-show="library.libraryList.length > 0" ng-click="library.showList()" class="alert button small-6 medium-4 large-3 columns">모든 책</div>
       <div ng-show="library.libraryList.length > 0" ng-click="library.hideList()" class="alert button small-6 medium-4 large-3 columns">모든 도서관</div>
       <div ng-show="library.libraryList.length === 0" ng-click="library.selectAllLibrary()" class="alert button small-6 medium-4 large-3 columns">도서관 모두 선택</div>
@@ -38,7 +38,7 @@
           <tr>
             <th width="100%" ng-click="library.toggleList($index)">
               <span class="alert badge" >❯ </span>
-              &nbsp;{{lib.libraryName}}
+              &nbsp;{{lib.libraryLabel}}
               <span ng-hide="lib.error" class="secondary badge" >{{lib.books.length}}</span>
               <span ng-hide="lib.error" class="info badge" >{{lib.validLength}}</span>
               <span ng-show="lib.error" class="alert badge" >0</span>
