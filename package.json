@@ -18,8 +18,7 @@
   "scripts": {
     "start": "node ./bin/dongnelibraryspa",
     "test": "gulp test",
-    "postinstall": "bower install && gulp build",
-    "build": "gulp build"
+    "postinstall": "bower install && gulp build"
   },
   "devDependencies": {
     "browser-sync": "^2.26.3",
