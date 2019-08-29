@@ -18,10 +18,10 @@
   "scripts": {
     "start": "node ./bin/dongnelibraryspa",
     "test": "gulp test",
-    "postinstall": "bower install && gulp build"
+    "postinstall": "bower install && ./node_modules/.bin/gulp build"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.3",
+    "browser-sync": "^2.26.7",
     "browser-sync-spa": "~1.0.3",
     "chalk": "~1.1.1",
     "del": "~2.0.2",
@@ -51,14 +51,14 @@
     "gulp-useref": "^3.1.6",
     "gulp-util": "~3.0.6",
     "http-proxy-middleware": "^0.19.1",
-    "karma": "^4.0.0",
+    "karma": "^4.3.0",
     "karma-angular-filesort": "~1.0.0",
     "karma-coverage": "~0.5.2",
     "karma-jasmine": "~0.3.6",
     "karma-ng-html2js-preprocessor": "~0.2.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-phantomjs-shim": "~1.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "main-bower-files": "^2.13.1",
     "phantomjs": "~1.9.18",
     "uglify-save-license": "~0.4.1",
