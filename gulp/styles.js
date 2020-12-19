@@ -11,11 +11,6 @@ var $ = require('gulp-load-plugins')();
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 
-gulp.task('styles-reload', ['styles'], function() {
-  return buildStyles()
-    .pipe(browserSync.stream());
-});
-
 gulp.task('styles', function() {
   return buildStyles();
 });
@@ -53,3 +48,9 @@ var buildStyles = function() {
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/app/')));
 };
+
+gulp.task('styles-reload', gulp.series('styles', function() {
+  return buildStyles()
+    .pipe(browserSync.stream());
+}));
+
