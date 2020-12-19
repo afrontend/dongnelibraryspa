@@ -20,7 +20,7 @@ docker start dongne
 ```sh
 git clone https://github.com/afrontend/dongnelibraryspa
 cd dongnelibraryspa
-npm install
+npm ci
 npm start
 ```
 `http://localhost:3000/` 주소에 접속하여 도서 검색
