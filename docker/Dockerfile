@@ -19,5 +19,5 @@ RUN sudo apt-get update && \
     sudo apt-get install -y nodejs && \
     sudo apt-get install -y git && \
     git clone https://github.com/afrontend/dongnelibraryspa /home/developer && \
-    npm install
+    npm ci
 CMD ["npm", "start"]
