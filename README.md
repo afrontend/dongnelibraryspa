@@ -19,3 +19,6 @@ http://dongne.herokuapp.com/
 [![동네북 웹 서비스](https://agvim.files.wordpress.com/2017/07/dongne23.png "동네북 스크린 샷")][dls-url]
 
 [dls-url]: http://dongne.herokuapp.com/
+
+## License
+MIT © [Bob Hwang](https://afrontend.github.io)
